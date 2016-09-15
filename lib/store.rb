@@ -1,12 +1,14 @@
-class Store
+# frozen_string_literal: true
+class Store # :nodoc:
   attr_reader :h
 
-  def initialize
+  def initialize(clobber: false)
     @h = {}
+    @clobber = clobber
   end
 
   def set(k, v)
-    h[k] = v
+    h[k] = v if can_write? k
   end
 
   def get(k)
@@ -15,5 +17,13 @@ class Store
 
   def delete(k)
     h.delete k
+  end
+
+  def can_write?(k)
+    !(get k || clobberable?)
+  end
+
+  def clobberable?
+    @clobber
   end
 end

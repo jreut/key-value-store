@@ -14,6 +14,15 @@ RSpec.describe Store do
       got = subject.get key
       expect(got).to be value
     end
+
+    it "won't overwrite a previously set value" do
+      key = 'foo'
+      value = 'bar'
+      another_value = 'baz'
+      subject.set key, value
+      subject.set key, another_value
+      expect(subject.get(key)).to be value
+    end
   end
 
   it 'deletes' do
