@@ -20,7 +20,7 @@ class Store # :nodoc:
   end
 
   def can_write?(k)
-    !(get k || clobberable?)
+    !get(k) || clobberable?
   end
 
   def clobberable?

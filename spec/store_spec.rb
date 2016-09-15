@@ -15,13 +15,28 @@ RSpec.describe Store do
       expect(got).to be value
     end
 
-    it "won't overwrite a previously set value" do
-      key = 'foo'
-      value = 'bar'
-      another_value = 'baz'
-      subject.set key, value
-      subject.set key, another_value
-      expect(subject.get(key)).to be value
+    context 'when trying to clobber' do
+      it "won't overwrite a previously set value by default" do
+        key = 'foo'
+        value = 'bar'
+        another_value = 'baz'
+        subject.set key, value
+        subject.set key, another_value
+        expect(subject.get(key)).to be value
+      end
+
+      context 'when configured to allow it' do
+        subject { described_class.new(clobber: true) }
+
+        it 'will overwrite the value' do
+          key = 'foo'
+          value = 'bar'
+          another_value = 'baz'
+          subject.set key, value
+          subject.set key, another_value
+          expect(subject.get(key)).to be another_value
+        end
+      end
     end
   end
 
