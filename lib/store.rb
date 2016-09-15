@@ -3,6 +3,7 @@ class Store # :nodoc:
   attr_reader :h
 
   def initialize(clobber: false)
+    raise ArgumentError, 'clobber cannot be nil' if clobber.nil?
     @h = {}
     @clobber = clobber
   end

@@ -2,6 +2,13 @@
 require 'store'
 
 RSpec.describe Store do
+  context 'configuration' do
+    it 'clobber parameter must be true or false' do
+      expect { described_class.new(clobber: nil) }
+        .to raise_error(ArgumentError, /nil/)
+    end
+  end
+
   context 'getting and setting' do
     it 'starts empty' do
       expect(subject.get('foo')).to be_nil
