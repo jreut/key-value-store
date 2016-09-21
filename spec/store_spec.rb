@@ -1,14 +1,9 @@
 # frozen_string_literal:  true
 require 'store'
 
-RSpec.describe Store do
-  context 'configuration' do
-    it 'clobber parameter must be true or false' do
-      expect { described_class.new(clobber: nil) }
-        .to raise_error(ArgumentError, /nil/)
-    end
-  end
+require 'clobbering_strategy'
 
+RSpec.describe Store do
   context 'getting and setting' do
     it 'starts empty' do
       expect(subject.get('foo')).to be_nil
@@ -33,7 +28,7 @@ RSpec.describe Store do
       end
 
       context 'when configured to allow it' do
-        subject { described_class.new(clobber: true) }
+        subject { described_class.new(storage_strategy: ClobberingStrategy) }
 
         it 'will overwrite the value' do
           key = 'foo'

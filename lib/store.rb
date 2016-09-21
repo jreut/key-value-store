@@ -1,15 +1,16 @@
 # frozen_string_literal: true
-class Store # :nodoc:
-  attr_reader :h
+require 'no_clobbering_strategy'
 
-  def initialize(clobber: false)
-    raise ArgumentError, 'clobber cannot be nil' if clobber.nil?
+class Store # :nodoc:
+  attr_reader :h, :storage_strategy
+
+  def initialize(storage_strategy: NoClobberingStrategy)
     @h = {}
-    @clobber = clobber
+    @storage_strategy = storage_strategy.new
   end
 
   def set(k, v)
-    h[k] = v if can_write? k
+    h[k] = storage_strategy.clobber(old: get(k), new: v)
   end
 
   def get(k)
@@ -18,13 +19,5 @@ class Store # :nodoc:
 
   def delete(k)
     h.delete k
-  end
-
-  def can_write?(k)
-    !get(k) || clobberable?
-  end
-
-  def clobberable?
-    @clobber
   end
 end
