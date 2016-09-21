@@ -1,6 +1,11 @@
 # frozen_string_literal: true
 require 'rake'
 require 'rspec/core/rake_task'
+require 'rubocop/rake_task'
+
+RuboCop::RakeTask.new do |t|
+  t.options = %w(--display-cop-names)
+end
 
 RSpec::Core::RakeTask.new
 
@@ -19,4 +24,4 @@ task :mutant do
   raise 'Mutant task is not successful' unless Kernel.system(*arguments)
 end
 
-task default: [:spec, :mutant]
+task default: [:rubocop, :spec, :mutant]

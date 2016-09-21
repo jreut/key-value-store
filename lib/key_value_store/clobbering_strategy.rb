@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 module KeyValueStore
   class ClobberingStrategy # :nodoc:
-    def clobber(old:, new:)
+    def clobber(new:, **)
       new
     end
   end
