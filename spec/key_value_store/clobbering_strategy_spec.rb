@@ -1,8 +1,8 @@
 # frozen_string_literal: true
-require 'clobbering_strategy'
+require 'key_value_store/clobbering_strategy'
 require 'roles/storage_strategy_role'
 
-RSpec.describe ClobberingStrategy do
+RSpec.describe KeyValueStore::ClobberingStrategy do
   include_examples 'StorageStrategyRole'
 
   context '#clobber' do

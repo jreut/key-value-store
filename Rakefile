@@ -14,7 +14,7 @@ task :mutant do
     --zombie
   )
 
-  arguments.concat(%w(-- Store*))
+  arguments.concat(%w(-- KeyValueStore*))
 
   raise 'Mutant task is not successful' unless Kernel.system(*arguments)
 end
