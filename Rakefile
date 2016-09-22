@@ -14,7 +14,6 @@ task :mutant do
   arguments = %w(
     bundle exec mutant
     --include lib
-    --require mutant
     --use rspec
     --zombie
   )
