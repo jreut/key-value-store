@@ -15,7 +15,6 @@ task :mutant do
     bundle exec mutant
     --include lib
     --use rspec
-    --zombie
   )
 
   arguments.concat(%w(-- KeyValueStore*))
